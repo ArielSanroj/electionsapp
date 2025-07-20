@@ -1,115 +1,325 @@
+/* static/css/styles.css */
 body {
-    background-color: #f8f9fa;
-}
-
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: #343a40;
-}
-
-#results p {
-    white-space: pre-wrap;
-}
-
-#sentimentChart {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* Accordion Styles */
-.accordion-header {
-    padding: 10px;
-    background-color: #f5f5f5;
-    cursor: pointer;
-    font-weight: bold;
-    border-bottom: 1px solid #ddd;
-}
-
-.accordion-content {
-    padding: 10px;
-    display: none;
-    background-color: #fff;
-}
-
-.accordion-content.active {
-    display: block;
-}
-
-canvas {
-    max-width: 100%;
-}
-
-/* New styles for webpage.html */
-body.webpage {
-    background-color: #f0f5fa;
-    color: #333;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #333333; /* Dark gray background */
+    font-size: 16px;
+    color: #ffffff; /* White text for contrast */
 }
 
-.webpage header {
+header {
     text-align: center;
-    padding: 20px;
-    background-color: #fff;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #000000; /* Black header */
+    border-bottom: 2px solid #666666; /* Medium gray border */
+    position: relative; /* Allows positioning of logo */
 }
 
-.webpage h1 {
-    color: #1e3a8a;
-    font-size: 2.5em;
+.logo {
+    max-width: 200px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 1rem; /* Space below logo */
 }
 
-.webpage .stats, .webpage .feature-cards {
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: #ffffff; /* White text */
+    text-align: center;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #cccccc; /* Light gray text */
+    text-align: center;
+}
+
+header .categories {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #cccccc; /* Light gray text */
+    text-align: center;
+}
+
+.stats, .feature-cards {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
     display: flex;
     justify-content: center;
     gap: 20px;
-    padding: 20px;
+    flex-wrap: wrap;
 }
 
-.webpage .card {
-    background: #fff;
-    padding: 15px;
+.card {
+    background-color: #444444; /* Dark gray card */
+    border: 1px solid #666666; /* Medium gray border */
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Darker shadow */
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #ffffff; /* White text */
 }
 
-.webpage .analysis {
+.analysis {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
     text-align: center;
-    padding: 20px;
+    color: #ffffff; /* White text */
 }
 
-.webpage form {
+.analysis h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff; /* White text */
+    text-align: center;
+}
+
+.analysis p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #cccccc; /* Light gray text */
+    text-align: center;
+}
+
+form {
     display: flex;
-    flex-direction: column;
-    max-width: 300px;
-    margin: 20px auto;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    background-color: #444444; /* Dark gray form */
+    border: 1px solid #666666; /* Medium gray border */
+    border-radius: 8px;
+    padding: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.webpage input {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
+form input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #999999; /* Light gray border */
     border-radius: 4px;
+    background-color: #555555; /* Medium gray input */
+    color: #ffffff; /* White text */
 }
 
-.webpage button {
-    padding: 10px;
-    background-color: #1e3a8a;
-    color: #fff;
+form button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff; /* Keep blue button for contrast */
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.webpage .features {
-    text-align: center; /* Centra el título y el párrafo */
-    padding: 20px;
+form button:hover {
+    background-color: #0056b3;
 }
 
-.webpage .features h2 {
-    margin-bottom: 10px;
+.large-box {
+    border: 1px solid #666666; /* Medium gray border */
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: #444444; /* Dark gray box */
+    margin-top: 1rem;
+    color: #ffffff; /* White text */
+}
+
+.tab-container {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #666666; /* Medium gray border */
+    margin-bottom: 1rem;
+}
+
+.tab {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border: 1px solid #666666; /* Medium gray border */
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    background-color: #555555; /* Medium gray tab */
+    color: #ffffff; /* White text */
+}
+
+.tab.active {
+    background-color: #007bff; /* Blue background for active tab */
+    color: #ffffff; /* White text */
+    border-bottom: 2px solid #007bff; /* Blue border to match */
+}
+
+.content-area {
+    padding: 1rem;
+    min-height: 200px;
+    background-color: #555555; /* Medium gray content area */
+    color: #ffffff; /* White text */
+}
+
+.content-area h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 0;
+    color: #ffffff; /* White text */
+}
+
+.content-area .category-list {
+    padding: 0;
+}
+
+.category-box {
+    margin-bottom: 1rem;
+    border: 1px solid #666666; /* Medium gray border */
+    border-radius: 4px;
+    background-color: #444444; /* Dark gray box */
+}
+
+.category-header {
+    background-color: #555555; /* Medium gray header */
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: #ffffff; /* White text */
+}
+
+.category-header strong {
+    font-size: 1.1rem;
+    color: #ffffff; /* White text */
+}
+
+.category-content {
+    padding: 1rem;
+    display: none;
+    background-color: #666666; /* Medium gray content */
+    color: #ffffff; /* White text */
+}
+
+.category-content.active {
+    display: block;
+}
+
+.content-area .tweet-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.content-area .category-item {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: #555555; /* Medium gray item */
+    border-radius: 4px;
+    color: #ffffff; /* White text */
+}
+
+.content-area .tweets {
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+}
+
+.content-area .tweet-item {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+    background-color: #444444; /* Dark gray tweet */
+    border-left: 2px solid #007bff; /* Blue accent border */
+    color: #ffffff; /* White text */
+}
+
+.tweet-text {
+    display: block;
+    font-size: 1rem;
+    color: #ffffff; /* White text */
+}
+
+.sentiment {
+    display: block;
+    font-size: 0.9rem;
+    color: #cccccc; /* Light gray text */
+    font-style: italic;
+}
+
+.strategy-list {
+    padding: 0;
+}
+
+.strategy-card {
+    margin-bottom: 1rem;
+    border: 1px solid #666666;
+    border-radius: 4px;
+    background-color: #444444;
+}
+
+.strategy-header {
+    background-color: #555555;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+}
+
+.strategy-header strong {
+    font-size: 1.1rem;
+    color: #ffffff;
+}
+
+.prioritize-btn {
+    padding: 0.25rem 0.5rem;
+    background-color: #ff4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.prioritize-btn:hover {
+    background-color: #cc0000;
+}
+
+.strategy-content {
+    padding: 1rem;
+    display: none;
+    background-color: #666666;
+    color: #ffffff;
+}
+
+.strategy-content.active {
+    display: block;
+}
+
+#chartCanvas {
+    max-width: 100%;
+    height: auto;
+}
+
+p {
+    line-height: 1.6;
+    color: #ffffff; /* White text */
+}
+
+.features {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    text-align: center; /* Center all content in features section */
+    color: #ffffff; /* White text */
+    background-color: #444444; /* Dark gray features */
+}
+
+.features h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff; /* White text */
+    text-align: center; /* Ensure centering */
+}
+
+.features p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #cccccc; /* Light gray text */
+    text-align: center; /* Ensure centering */
 }

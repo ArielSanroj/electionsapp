@@ -244,11 +244,10 @@ def generate_plan_and_discourse(classified_tweets, location):
         tweets = classified_tweets.get(concept, {}).get("tweets", [])
         sentiments = classified_tweets.get(concept, {}).get("sentiments", {"positivo": 0, "negativo": 0, "neutral": 0})
         total_tweets = sum(sentiments.values())
-        sentiment_summary = (
-            f"Sentimientos: Positivo {sentiments['positivo']} ({sentiments['positivo'] / total_tweets * 100:.1f}% if total_tweets else 0), "
-            f"Negativo {sentiments['negativo']} ({sentiments['negativo'] / total_tweets * 100:.1f}% if total_tweets else 0), "
-            f"Neutral {sentiments['neutral']} ({sentiments['neutral'] / total_tweets * 100:.1f}% if total_tweets else 0)"
-        ) if total_tweets else "Sin tweets, sin análisis de sentimiento."
+        neg_percent = (sentiments["negativo"] / total_tweets * 100) if total_tweets > 0 else 0
+        pos_percent = (sentiments["positivo"] / total_tweets * 100) if total_tweets > 0 else 0
+        neu_percent = (sentiments["neutral"] / total_tweets * 100) if total_tweets > 0 else 0
+        sentiment_summary = f"Sentimientos: Positivo {sentiments['positivo']} ({pos_percent:.1f}%), Negativo {sentiments['negativo']} ({neg_percent:.1f}%), Neutral {sentiments['neutral']} ({neu_percent:.1f}%)"
 
         if tweets:
             necesidad = f"Los electores de {location} expresan preocupaciones sobre {concept.lower()}: " + "; ".join(
@@ -268,6 +267,7 @@ def generate_plan_and_discourse(classified_tweets, location):
             "discurso": discurso,
             "impacto": impacto
         })
+        logger.info(f"Added concept to plan: {concept}, tweets: {len(tweets)}, necesidad: {necesidad[:50]}...")
 
     return plan
 
@@ -278,7 +278,7 @@ def generate_politician_discourse(plan, location, candidate_name="[Nombre del Ca
 
     for concepto in plan.get("conceptos", []):
         discourse_parts.append(
-            f"Respecto a {concepto['concepto'].lower()}:\n{concepto['necesidad']}\nMi propuesta es {concepto['propuesta'].lower()}.\n{concepto['discurso']}\n\n"
+            f"Respecto a {concepto['concepto'].lower()}:\n{concepto['discurso']}\n\n"
         )
 
     discourse_parts.append(
@@ -318,51 +318,46 @@ def generate_resumen_ejecutivo(classified, location):
         key=lambda x: x[1], default=("ninguno", 0)
     )[0]
 
-    return f"""El análisis de tweets recientes en {location} revela preocupaciones ciudadanas alineadas con los conceptos clave del Plan Nacional de Desarrollo (PND 2022-2026). Se recopilaron y clasificaron aproximadamente {total_tweets} tweets en español (excluyendo retweets) relacionados con temas como seguridad, alimentación, infraestructura, gobernanza, igualdad, paz, economía, medio ambiente, educación y salud.
-
-- **Tendencias generales**: La mayoría de los tweets muestran un tono mixto, con un predominio de neutral ({neu_porcent:.1f}%), seguido de negativo ({neg_porcent:.1f}%) y positivo ({pos_porcent:.1f}%). Los temas más críticos incluyen {max_neg_concept} ({classified[max_neg_concept]['sentiments']['negativo']} negativos), mientras que {max_pos_concept} destaca por positividad ({classified[max_pos_concept]['sentiments']['positivo']} positivos). Esto indica oportunidades para campañas enfocadas en soluciones prácticas.
-- **Volumen y sentimiento global**: Seguridad y salud generan más discusión negativa, mientras que alimentación y economía tienen más neutralidad. Esto sugiere priorizar temas críticos en la estrategia de campaña.
-- **Contexto**: Los tweets reflejan eventos actuales, con menciones frecuentes a figuras locales.
-
-Este panorama sugiere que los electores buscan acciones concretas en {location}."""
+    return f"""<p>El análisis de tweets recientes en {location} revela preocupaciones ciudadanas alineadas con los conceptos clave del Plan Nacional de Desarrollo (PND 2022-2026). Se recopilaron y clasificaron aproximadamente {total_tweets} tweets en español (excluyendo retweets) relacionados con temas como seguridad, alimentación, infraestructura, gobernanza, igualdad, paz, economía, medio ambiente, educación y salud.</p>
+<p><strong>Tendencias generales</strong>: La mayoría de los tweets muestran un tono mixto, con un predominio de neutral ({neu_porcent:.1f}%), seguido de negativo ({neg_porcent:.1f}%) y positivo ({pos_porcent:.1f}%). Los temas más críticos incluyen {max_neg_concept} ({classified[max_neg_concept]['sentiments']['negativo']} negativos), mientras que {max_pos_concept} destaca por positividad ({classified[max_pos_concept]['sentiments']['positivo']} positivos). Esto indica oportunidades para campañas enfocadas en soluciones prácticas.</p>
+<p><strong>Volumen y sentimiento global</strong>: Seguridad y salud generan más discusión negativa, mientras que alimentación y economía tienen más neutralidad. Esto sugiere priorizar temas críticos en la estrategia de campaña.</p>
+<p><strong>Contexto</strong>: Los tweets reflejan eventos actuales, con menciones frecuentes a figuras locales.</p>
+<p>Este panorama sugiere que los electores buscan acciones concretas en {location}.</p>"""
 
 def generate_analisis_datos(classified):
     output = ""
     for concept in PND_CONCEPTS:
         data = classified.get(concept, {})
-        if not data.get("tweets", []):
+        tweets = data.get("tweets", [])
+        if not tweets:
             continue
-        output += f"- **{concept}** ({len(data['tweets'])} tweets, Sentimientos: Positivo {data['sentiments']['positivo']}, Negativo {data['sentiments']['negativo']}, Neutral {data['sentiments']['neutral']}):\n"
-        for tweet in data["tweets"][:3]:
-            output += f"  - \"{tweet['text'][:100]}...\" ({tweet['sentiment'].capitalize()}; {tweet['explanation'][:50]}...).\n"
-    if classified.get("Ninguno", {}).get("tweets"):
-        output += f"- **Ninguno** ({len(classified['Ninguno']['tweets'])} tweets, Sentimientos: Positivo {classified['Ninguno']['sentiments']['positivo']}, Negativo {classified['Ninguno']['sentiments']['negativo']}, Neutral {classified['Ninguno']['sentiments']['neutral']}):\n"
-        for tweet in classified["Ninguno"]["tweets"][:3]:
-            output += f"  - \"{tweet['text'][:100]}...\" ({tweet['sentiment'].capitalize()}; {tweet['explanation'][:50]}...).\n"
-    return output
+        sentiments = data.get("sentiments", {"positivo": 0, "negativo": 0, "neutral": 0})
+        output += f"{concept} ({len(tweets)} tweets, Sentimientos: Positivo {sentiments['positivo']}, Negativo {sentiments['negativo']}, Neutral {sentiments['neutral']}):\n"
+        for tweet in tweets:
+            output += f"  - \"{tweet['text']}\" ({tweet['sentiment'].capitalize()})\n"
+    return output.strip() if output else "No data available for analysis."
 
 def generate_plan_estrategico(plan_conceptos, classified):
+    logger.info("Generating plan estratégico with plan_conceptos: %s", plan_conceptos)
     output = ""
     for concepto in plan_conceptos:
         concept_key = concepto['concepto']
         sentiments = classified.get(concept_key, {}).get("sentiments", {"positivo": 0, "negativo": 0, "neutral": 0})
         total = sum(sentiments.values())
-        neg_porcent = sentiments["negativo"] / total * 100 if total else 0
-        output += f"- **{concepto['concepto']}**: Necesidad: {concepto['necesidad'][:100]}... ({neg_porcent:.1f}% negativo). Propuesta: {concepto['propuesta']}. Impacto: {concepto['impacto']}\n"
-    return output
+        neg_porcent = (sentiments["negativo"] / total * 100) if total > 0 else 0
+        output += f"{concepto['concepto']}: Necesidad: {concepto['necesidad']} ({neg_porcent:.1f}% negativo). Propuesta: {concepto['propuesta']}. Impacto: {concepto['impacto']}\n"
+    return output.strip() if output else "No data available for strategic planning."
 
 def generate_discurso(plan_conceptos, location="Bogotá", candidate_name="[Nombre del Candidato]"):
     discourse = f"Queridos ciudadanos de {location}, soy {candidate_name}, un abogado de Bogotá con pasión por la ganadería y el arte, y un enfoque ligero pero comprometido en la política.\n\n"
     for concepto in plan_conceptos:
-        discourse += f"Respecto a {concepto['concepto'].lower()}:\n{concepto['necesidad']}\nMi propuesta es {concepto['propuesta'].lower()}.\n{concepto['discurso']}\n\n"
+        discourse += f"Respecto a {concepto['concepto'].lower()}:\n{concepto['discurso']}\n\n"
     discourse += f"Juntos, alineados con el PND 2022-2026, construiremos un {location} mejor. ¡Voten por el cambio real!"
     return discourse
 
 def generate_grafico_visuales(chart_data, location="Bogotá"):
     return {
-        "text": f"""Se recomienda un gráfico de barras apiladas para visualizar sentimientos por concepto (eje X: Conceptos, eje Y: Conteo de tweets, colores: Positivo #36A2EB, Negativo #FF6384, Neutral #FFCE56). Usa herramientas como Chart.js para renderizar.
-
-Visual adicional sugerido: Un mapa de calor de {location} destacando zonas mencionadas en tweets, o un word cloud de keywords negativas.""",
+        "text": "",
         "chart_config": {
             "type": "bar",
             "data": {
@@ -399,6 +394,7 @@ Visual adicional sugerido: Un mapa de calor de {location} destacando zonas menci
     }
 
 def generate_structured_report(classified, chart_data, plan_conceptos, candidate_name="[Nombre del Candidato]", location="Bogotá"):
+    logger.info("Generating structured report with plan_conceptos: %s", plan_conceptos)
     resumen = generate_resumen_ejecutivo(classified, location)
     analisis = generate_analisis_datos(classified)
     plan = generate_plan_estrategico(plan_conceptos, classified)

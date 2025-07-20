@@ -3,39 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaña Inteligente</title>
+    <title>Castor Elecciones: Análisis Político en Tiempo Real</title>
+    <meta name="description" content="Castor Elecciones es una app de IA que ayuda a políticos a analizar sentimientos electorales en tiempo real y crear planes de campaña efectivos en temas como seguridad, economía y educación.">
+    <meta name="keywords" content="Castor Elecciones, análisis político IA, campañas electorales, datos en tiempo real, planes de campaña políticos">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Castor Elecciones",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "App de IA para análisis político en tiempo real y planes de campaña."
+    }
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <!-- Dependencias para gráficos y PDF -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="webpage">
     <header>
-        <h1>Campaña Inteligente<br>Basada en Datos</h1>
-        <p>Conoce las necesidades de tus electores en tiempo real<br>Seguridad, Alimentación, Infraestructura, Economía, Empleo, Gobernanza, Medio Ambiente, Educación y Salud</p>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Castor Elecciones Logo" class="logo">
+        <h1>Campaña Electoral Inteligente<br>Basada en Datos</h1>
+        <p>Herramienta avanzada de inteligencia artificial para el análisis político moderno</p>
+        <div class="categories">Conoce las necesidades de tus electores en tiempo real</div>
         <div class="stats">
-            <div class="card">Análisis en tiempo real<br>del sentimiento político</div>
-            <div class="card">Miles de<br>Tweets Analizados</div>
-            <div class="card">100%<br>Precisión en Sentimientos</div>
+            <div class="card">Análisis del Sentimiento Político</div>
+            <div class="card">Miles de Datos<br>Analizados en Tiempo Real</div>
+            <div class="card">99%<br>Precisión en Sentimientos</div>
         </div>
     </header>
     <section class="analysis">
         <h2>Comienza tu Análisis</h2>
-        <p>Ingresa los datos de tu campaña para obtener un análisis detallado del sentimiento político y deseo popular</p>
+        <p>Ingresa la ubicación de tu campaña y conoce qué está pasando en Seguridad, Alimentación, Infraestructura, Economía, Empleo, Gobernanza, Medio Ambiente, Educación y Salud</p>
         <form id="analysisForm">
-            <input type="text" name="location" placeholder="Ubicación" value="Bogotá" required>
-            <input type="text" name="candidate_name" placeholder="Nombre del Candidato" value="María González" required>
+            <input type="text" name="location" placeholder="Ubicación" required>
+            <input type="text" name="candidate_name" placeholder="Nombre del Candidato" required>
             <button type="submit">Iniciar Análisis</button>
         </form>
-        <div id="results" class="card"></div>
+        <div id="results" class="large-box">
+            <div class="tab-container">
+                <div class="tab active" data-section="resumen" onclick="switchTab(event)">Resumen Ejecutivo</div>
+                <div class="tab" data-section="analisis" onclick="switchTab(event)">Análisis de Datos</div>
+                <div class="tab" data-section="plan" onclick="switchTab(event)">Plan Estratégico</div>
+                <div class="tab" data-section="discurso" onclick="switchTab(event)">Discurso</div>
+                <div class="tab" data-section="grafico" onclick="switchTab(event)">Gráfico Sugerido</div>
+            </div>
+            <div id="content-area" class="content-area"></div>
+        </div>
     </section>
     <section class="features">
         <h2>Características Principales</h2>
         <p>Herramientas avanzadas de inteligencia artificial para el análisis político moderno</p>
         <div class="feature-cards">
-            <div class="card">Análisis de Sentimientos<br>Procesamiento avanzado de texto para clasificar sentimientos de los electores</div>
-            <div class="card">Alineación con el Plan Nacional de Desarrollo<br>Clasificación automática según los ejes clave del Plan Nacional de Desarrollo</div>
-            <div class="card">Generación de Discursos<br>Creación automática de discursos políticos personalizados basados en las preocupaciones ciudadanas</div>
+            <div class="card">Procesamiento avanzado de texto para clasificar sentimientos de los electores</div>
+            <div class="card">Obten un análisis detallado del sentimiento político y deseo popular según los ejes clave del Plan Nacional de Desarrollo</div>
+            <div class="card">Generación automática de planes estratégicos, discursos y gráficos personalizados para optimizar tu campaña electoral en tiempo real</div>
         </div>
     </section>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
