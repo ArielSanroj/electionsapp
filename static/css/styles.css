@@ -1,0 +1,115 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #343a40;
+}
+
+#results p {
+    white-space: pre-wrap;
+}
+
+#sentimentChart {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Accordion Styles */
+.accordion-header {
+    padding: 10px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion-content {
+    padding: 10px;
+    display: none;
+    background-color: #fff;
+}
+
+.accordion-content.active {
+    display: block;
+}
+
+canvas {
+    max-width: 100%;
+}
+
+/* New styles for webpage.html */
+body.webpage {
+    background-color: #f0f5fa;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.webpage header {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.webpage h1 {
+    color: #1e3a8a;
+    font-size: 2.5em;
+}
+
+.webpage .stats, .webpage .feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.webpage .card {
+    background: #fff;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.webpage .analysis {
+    text-align: center;
+    padding: 20px;
+}
+
+.webpage form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.webpage input {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.webpage button {
+    padding: 10px;
+    background-color: #1e3a8a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.webpage .features {
+    text-align: center; /* Centra el título y el párrafo */
+    padding: 20px;
+}
+
+.webpage .features h2 {
+    margin-bottom: 10px;
+}

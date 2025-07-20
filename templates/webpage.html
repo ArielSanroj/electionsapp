@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaña Inteligente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Dependencias para gráficos y PDF -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="webpage">
+    <header>
+        <h1>Campaña Inteligente<br>Basada en Datos</h1>
+        <p>Conoce las necesidades de tus electores en tiempo real<br>Seguridad, Alimentación, Infraestructura, Economía, Empleo, Gobernanza, Medio Ambiente, Educación y Salud</p>
+        <div class="stats">
+            <div class="card">Análisis en tiempo real<br>del sentimiento político</div>
+            <div class="card">Miles de<br>Tweets Analizados</div>
+            <div class="card">100%<br>Precisión en Sentimientos</div>
+        </div>
+    </header>
+    <section class="analysis">
+        <h2>Comienza tu Análisis</h2>
+        <p>Ingresa los datos de tu campaña para obtener un análisis detallado del sentimiento político y deseo popular</p>
+        <form id="analysisForm">
+            <input type="text" name="location" placeholder="Ubicación" value="Bogotá" required>
+            <input type="text" name="candidate_name" placeholder="Nombre del Candidato" value="María González" required>
+            <button type="submit">Iniciar Análisis</button>
+        </form>
+        <div id="results" class="card"></div>
+    </section>
+    <section class="features">
+        <h2>Características Principales</h2>
+        <p>Herramientas avanzadas de inteligencia artificial para el análisis político moderno</p>
+        <div class="feature-cards">
+            <div class="card">Análisis de Sentimientos<br>Procesamiento avanzado de texto para clasificar sentimientos de los electores</div>
+            <div class="card">Alineación con el Plan Nacional de Desarrollo<br>Clasificación automática según los ejes clave del Plan Nacional de Desarrollo</div>
+            <div class="card">Generación de Discursos<br>Creación automática de discursos políticos personalizados basados en las preocupaciones ciudadanas</div>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
