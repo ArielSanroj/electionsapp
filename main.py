@@ -451,5 +451,5 @@ def analyze():
         logger.error(f"Error in /analyze: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
-if __name__ == "__main__":
-    app.run(debug=False)
+#if __name__ == "__main__":
+    #app.run(debug=False)
